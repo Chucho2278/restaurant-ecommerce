@@ -1,0 +1,30 @@
+/* Asegura que las tarjetas se muestren en una cuadrícula con 4 columnas */
+.card-deck {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.card {
+  flex: 0 0 23%; /* Ajusta el tamaño de la tarjeta para ocupar aproximadamente una cuarta parte del ancho */
+  margin-bottom: 20px; /* Añade un margen inferior para separar las filas */
+}
+
+/* Asegura que las tarjetas se adapten correctamente en pantallas más pequeñas */
+@media (max-width: 1200px) {
+  .card {
+    flex: 0 0 31%; /* Ajusta el tamaño para tres columnas en pantallas medianas */
+  }
+}
+
+@media (max-width: 992px) {
+  .card {
+    flex: 0 0 48%; /* Ajusta el tamaño para dos columnas en pantallas pequeñas */
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    flex: 0 0 100%; /* Una columna en pantallas muy pequeñas */
+  }
+}
