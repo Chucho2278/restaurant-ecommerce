@@ -2,12 +2,18 @@
   <h2>Tu Carrito</h2>
   <ul class="list-group">
     <li class="list-group-item" *ngFor="let item of items">
-      {{ item.name }} - ${{ item.price }}
+      {{ item.product.name }} - ${{ item.product.price }} x {{ item.quantity }}
       <button
         class="btn btn-danger btn-sm float-right"
-        (click)="removeFromCart(item)"
+        (click)="removeFromCart(item.product)"
       >
-        Remove
+        -
+      </button>
+      <button
+        class="btn btn-success btn-sm float-right mr-2"
+        (click)="addToCart(item.product)"
+      >
+        +
       </button>
     </li>
   </ul>

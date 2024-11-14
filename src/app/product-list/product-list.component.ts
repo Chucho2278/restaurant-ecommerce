@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductApiService } from '../product-api.service';
-import { CartService } from '../cart.service'; // Importar CartService
+import { CartService } from '../cart.service';
 import { Product } from '../product';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css'],
 })
@@ -16,7 +17,7 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private productApiService: ProductApiService,
-    private cartService: CartService // Añadir CartService al constructor
+    private cartService: CartService
   ) {}
 
   ngOnInit() {
@@ -26,6 +27,6 @@ export class ProductListComponent implements OnInit {
   }
 
   addToCart(product: Product) {
-    this.cartService.addToCart(product); // Usar CartService para agregar productos al carrito
+    this.cartService.addToCart(product);
   }
 }

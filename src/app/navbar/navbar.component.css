@@ -1,3 +1,14 @@
 .navbar {
   margin-bottom: 20px;
 }
+
+/* Estilos para la imagen del carrito */
+.navbar-nav .nav-item .nav-link img {
+  margin-right: 5px; /* Añade margen entre la imagen y el contador */
+}
+
+.navbar-nav .badge-pill {
+  margin-left: 5px; /* Añade margen entre la imagen y el contador */
+  background-color: black; /* Color de fondo del contador */
+  color: white; /* Color del texto del contador */
+}

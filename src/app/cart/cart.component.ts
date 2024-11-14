@@ -11,7 +11,7 @@ import { Product } from '../product';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
-  items: Product[] = [];
+  items: { product: Product; quantity: number }[] = [];
   total: number = 0;
 
   constructor(private cartService: CartService) {}
@@ -22,12 +22,21 @@ export class CartComponent implements OnInit {
   }
 
   calculateTotal() {
-    this.total = this.items.reduce((acc, item) => acc + item.price, 0);
+    this.total = this.items.reduce(
+      (acc, item) => acc + item.product.price * item.quantity,
+      0
+    );
+  }
+
+  addToCart(product: Product) {
+    this.cartService.addToCart(product);
+    this.items = this.cartService.getItems();
+    this.calculateTotal();
   }
 
   removeFromCart(product: Product) {
-    this.cartService.removeFromCart(product); // Llamar al servicio para eliminar el producto
+    this.cartService.removeFromCart(product);
     this.items = this.cartService.getItems();
-    this.calculateTotal(); // Recalcular el total después de eliminar el producto
+    this.calculateTotal();
   }
 }

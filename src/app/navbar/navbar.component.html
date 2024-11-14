@@ -12,7 +12,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
+    <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" routerLink="/">Inicio</a>
       </li>
@@ -24,6 +24,18 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="/funcionarios">Funcionarios</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/carrito">
+          <img src="assets/cart.png" alt="Carrito" width="30" height="30" />
+          <span
+            class="badge badge-pill badge-danger"
+            style="background-color: black; color: white"
+            >{{ cartItemCount }}</span
+          >
+        </a>
       </li>
     </ul>
   </div>
