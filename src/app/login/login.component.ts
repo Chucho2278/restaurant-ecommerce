@@ -15,6 +15,7 @@ import { User } from '../user';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  errorMessage: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -31,18 +32,24 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       const user: User = this.loginForm.value;
-      this.userApiService.getUsers().subscribe((users: User[]) => {
-        const foundUser = users.find(
-          (u) => u.username === user.username && u.password === user.password
-        );
-        if (foundUser) {
-          console.log('Login successful:', foundUser);
-          this.authService.login(); // Iniciar sesión
-          this.router.navigate(['/funcionarios']);
-        } else {
-          console.error('Invalid username or password');
+      this.userApiService.getUsers().subscribe(
+        (users: User[]) => {
+          const foundUser = users.find(
+            (u) => u.username === user.username && u.password === user.password
+          );
+          if (foundUser) {
+            console.log('Login successful:', foundUser);
+            this.authService.login(); // Iniciar sesión
+            this.router.navigate(['/funcionarios']);
+            this.errorMessage = null;
+          } else {
+            this.errorMessage = 'Usuario o contraseña inválida';
+          }
+        },
+        (error) => {
+          this.errorMessage = 'Error de conexión, por favor intenta nuevamente';
         }
-      });
+      );
     }
   }
 }

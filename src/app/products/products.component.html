@@ -1,0 +1,69 @@
+<div class="container mt-4">
+  <h2>Administración de Productos</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Agregar Producto</h3>
+      <form [formGroup]="productForm" (ngSubmit)="addProduct()">
+        <div class="form-group">
+          <label for="name">Nombre del Producto</label>
+          <input id="name" formControlName="name" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="price">Precio</label>
+          <input
+            id="price"
+            formControlName="price"
+            type="number"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="description">Descripción</label>
+          <textarea
+            id="description"
+            formControlName="description"
+            class="form-control"
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="imageUrl">URL de la Imagen</label>
+          <input
+            id="imageUrl"
+            formControlName="imageUrl"
+            class="form-control"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">
+          Agregar Producto
+        </button>
+        <button
+          *ngIf="selectedProduct"
+          class="btn btn-success mt-3"
+          (click)="updateProduct()"
+        >
+          Actualizar Producto
+        </button>
+      </form>
+    </div>
+    <div class="col-md-6">
+      <h3>Actualizar/Eliminar Productos</h3>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let product of products">
+          {{ product.name }} - ${{ product.price }}
+          <button
+            class="btn btn-info btn-sm float-right ml-2"
+            (click)="editProduct(product)"
+          >
+            Editar
+          </button>
+          <button
+            class="btn btn-danger btn-sm float-right"
+            (click)="deleteProduct(product)"
+          >
+            Eliminar
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

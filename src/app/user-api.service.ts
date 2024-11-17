@@ -36,4 +36,32 @@ export class UserApiService {
         });
     });
   }
+
+  updateUser(user: User): Observable<User> {
+    return new Observable((observer) => {
+      axios
+        .put(`${this.apiUrl}/${user._id}`, user)
+        .then((response) => {
+          observer.next(response.data);
+          observer.complete();
+        })
+        .catch((error) => {
+          observer.error(error);
+        });
+    });
+  }
+
+  deleteUser(user: User): Observable<void> {
+    return new Observable((observer) => {
+      axios
+        .delete(`${this.apiUrl}/${user._id}`)
+        .then(() => {
+          observer.next();
+          observer.complete();
+        })
+        .catch((error) => {
+          observer.error(error);
+        });
+    });
+  }
 }
