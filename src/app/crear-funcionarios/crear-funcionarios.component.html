@@ -1,55 +1,46 @@
 <div class="container mt-4">
-  <h2>Gestión de Funcionarios</h2>
-  <div class="row">
-    <!-- Sección para Agregar/Actualizar Funcionario -->
-    <div class="col-md-6">
-      <h3>
-        {{ selectedUser ? "Actualizar Funcionario" : "Registrar Funcionario" }}
-      </h3>
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="username">Nombre de Usuario</label>
-          <input
-            id="username"
-            formControlName="username"
-            class="form-control"
-          />
-        </div>
-        <div class="form-group">
-          <label for="password">Contraseña</label>
-          <input
-            id="password"
-            formControlName="password"
-            type="password"
-            class="form-control"
-          />
-        </div>
-        <button type="submit" class="btn btn-primary mt-3">
-          {{ selectedUser ? "Actualizar" : "Registrar" }}
+  <h2>Crear y Gestionar Funcionarios</h2>
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input id="username" formControlName="username" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        id="password"
+        formControlName="password"
+        type="password"
+        class="form-control"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+    <button type="button" class="btn btn-secondary mt-3" (click)="resetForm()">
+      Reset
+    </button>
+  </form>
+  <div class="mt-4">
+    <h3>Lista de Funcionarios</h3>
+    <ul class="list-group">
+      <li *ngFor="let user of users" class="list-group-item">
+        {{ user.username }}
+        <button
+          class="btn btn-sm btn-warning float-end ms-2"
+          (click)="editUser(user)"
+        >
+          Editar
         </button>
-      </form>
-    </div>
-
-    <!-- Sección para Ver/Eliminar Funcionarios -->
-    <div class="col-md-6">
-      <h3>Lista de Funcionarios</h3>
-      <ul class="list-group">
-        <li class="list-group-item" *ngFor="let user of users">
-          {{ user.username }}
-          <button
-            class="btn btn-info btn-sm float-right ml-2"
-            (click)="editUser(user)"
-          >
-            Editar
-          </button>
-          <button
-            class="btn btn-danger btn-sm float-right"
-            (click)="deleteUser(user)"
-          >
-            Eliminar
-          </button>
-        </li>
-      </ul>
-    </div>
+        <button
+          class="btn btn-sm btn-danger float-end"
+          (click)="deleteUser(user)"
+        >
+          Eliminar
+        </button>
+      </li>
+    </ul>
   </div>
 </div>

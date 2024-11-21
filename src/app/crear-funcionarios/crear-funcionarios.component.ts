@@ -15,6 +15,8 @@ export class CrearFuncionariosComponent implements OnInit {
   registerForm: FormGroup;
   users: User[] = [];
   selectedUser: User | null = null;
+  errorMessage: string | null = null;
+  successMessage: string | null = null;
 
   constructor(private fb: FormBuilder, private userApiService: UserApiService) {
     this.registerForm = this.fb.group({
@@ -28,9 +30,15 @@ export class CrearFuncionariosComponent implements OnInit {
   }
 
   loadUsers() {
-    this.userApiService.getUsers().subscribe((data: User[]) => {
-      this.users = data;
-    });
+    this.userApiService.getUsers().subscribe(
+      (data: User[]) => {
+        this.users = data;
+      },
+      (error) => {
+        console.error('Error fetching users:', error);
+        this.errorMessage = 'Error fetching users. Please try again later.';
+      }
+    );
   }
 
   onSubmit() {
@@ -40,16 +48,30 @@ export class CrearFuncionariosComponent implements OnInit {
           ...this.selectedUser,
           ...this.registerForm.value,
         };
-        this.userApiService.updateUser(updatedUser).subscribe(() => {
-          this.resetForm();
-          this.loadUsers();
-        });
+        this.userApiService.updateUser(updatedUser).subscribe(
+          () => {
+            this.resetForm();
+            this.loadUsers();
+            this.successMessage = 'User updated successfully.';
+          },
+          (error) => {
+            console.error('Error updating user:', error);
+            this.errorMessage = 'Error updating user. Please try again later.';
+          }
+        );
       } else {
         const newUser: User = this.registerForm.value;
-        this.userApiService.addUser(newUser).subscribe(() => {
-          this.resetForm();
-          this.loadUsers();
-        });
+        this.userApiService.addUser(newUser).subscribe(
+          () => {
+            this.resetForm();
+            this.loadUsers();
+            this.successMessage = 'User added successfully.';
+          },
+          (error) => {
+            console.error('Error adding user:', error);
+            this.errorMessage = 'Error adding user. Please try again later.';
+          }
+        );
       }
     }
   }
@@ -63,13 +85,24 @@ export class CrearFuncionariosComponent implements OnInit {
   }
 
   deleteUser(user: User) {
-    this.userApiService.deleteUser(user).subscribe(() => {
-      this.loadUsers();
-    });
+    console.log('Deleting user with ID:', user._id); // Mensaje de depuración
+    this.userApiService.deleteUser(user._id).subscribe(
+      () => {
+        // Usar _id para eliminar
+        this.users = this.users.filter((u) => u._id !== user._id); // Actualizar la lista en la interfaz de usuario
+        this.successMessage = 'User deleted successfully.';
+      },
+      (error) => {
+        console.error('Error deleting user:', error);
+        this.errorMessage = 'Error deleting user. Please try again later.';
+      }
+    );
   }
 
   resetForm() {
     this.selectedUser = null;
     this.registerForm.reset();
+    this.errorMessage = null;
+    this.successMessage = null;
   }
 }

@@ -1,0 +1,29 @@
+<div class="container mt-4">
+  <h2>Confirmación de Pedido</h2>
+  <div *ngIf="order">
+    <p><strong>Número de Orden:</strong> {{ order.orderNumber }}</p>
+    <p><strong>Nombre:</strong> {{ order.name }}</p>
+    <p><strong>Apellido:</strong> {{ order.surname }}</p>
+    <p><strong>Teléfono:</strong> {{ order.phone }}</p>
+    <div *ngIf="order.address">
+      <p><strong>Dirección:</strong> {{ order.address }}</p>
+    </div>
+    <div *ngIf="order.deliveryTime">
+      <p><strong>Hora de Entrega:</strong> {{ order.deliveryTime }}</p>
+    </div>
+    <div *ngIf="order.pickupTime">
+      <p><strong>Hora de Recogida:</strong> {{ order.pickupTime }}</p>
+    </div>
+    <p><strong>Correo Electrónico:</strong> {{ order.email }}</p>
+    <p><strong>Método de Pago:</strong> {{ order.paymentMethod }}</p>
+    <h3>Productos:</h3>
+    <ul>
+      <li *ngFor="let item of order.items">
+        {{ item.product.name }} - Cantidad: {{ item.quantity }} - Precio: ${{
+          item.product.price
+        }}
+      </li>
+    </ul>
+    <p><strong>Total:</strong> ${{ total }}</p>
+  </div>
+</div>

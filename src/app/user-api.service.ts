@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import axios from 'axios';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from './user';
 
@@ -9,59 +9,21 @@ import { User } from './user';
 export class UserApiService {
   private apiUrl = 'http://localhost:5000/api/users';
 
+  constructor(private http: HttpClient) {}
+
   getUsers(): Observable<User[]> {
-    return new Observable((observer) => {
-      axios
-        .get(this.apiUrl)
-        .then((response) => {
-          observer.next(response.data);
-          observer.complete();
-        })
-        .catch((error) => {
-          observer.error(error);
-        });
-    });
+    return this.http.get<User[]>(this.apiUrl);
   }
 
   addUser(user: User): Observable<User> {
-    return new Observable((observer) => {
-      axios
-        .post(this.apiUrl, user)
-        .then((response) => {
-          observer.next(response.data);
-          observer.complete();
-        })
-        .catch((error) => {
-          observer.error(error);
-        });
-    });
+    return this.http.post<User>(this.apiUrl, user);
   }
 
-  updateUser(user: User): Observable<User> {
-    return new Observable((observer) => {
-      axios
-        .put(`${this.apiUrl}/${user._id}`, user)
-        .then((response) => {
-          observer.next(response.data);
-          observer.complete();
-        })
-        .catch((error) => {
-          observer.error(error);
-        });
-    });
+  updateUser(user: User): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${user._id}`, user);
   }
 
-  deleteUser(user: User): Observable<void> {
-    return new Observable((observer) => {
-      axios
-        .delete(`${this.apiUrl}/${user._id}`)
-        .then(() => {
-          observer.next();
-          observer.complete();
-        })
-        .catch((error) => {
-          observer.error(error);
-        });
-    });
+  deleteUser(userId: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${userId}`);
   }
 }
