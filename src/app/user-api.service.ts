@@ -7,7 +7,7 @@ import { User } from './user';
   providedIn: 'root',
 })
 export class UserApiService {
-  private apiUrl = 'http://localhost:5000/api/users';
+  private apiUrl = 'https://restaurant-ecommerce-theta.vercel.app/api/users'; // Actualiza con tu URL principal de Vercel
 
   constructor(private http: HttpClient) {}
 
