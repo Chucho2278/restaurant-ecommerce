@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const mongoose = require("./db"); // Importará tu configuración de MongoDB
+const mongoose = require("./db"); // Importa tu configuración de MongoDB
 const cors = require("cors");
 require("dotenv").config();
 
@@ -11,7 +11,13 @@ const orderRoutes = require("./routes/order.routes"); // Importar rutas de pedid
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(cors());
+// Configurar CORS para permitir solicitudes desde tu dominio de GitHub Pages
+const corsOptions = {
+  origin: "https://tu-usuario.github.io", // Reemplaza 'tu-usuario' con tu nombre de usuario de GitHub
+  optionsSuccessStatus: 200, // Para hacer compatible con navegadores más antiguos
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Servir archivos estáticos de Angular
