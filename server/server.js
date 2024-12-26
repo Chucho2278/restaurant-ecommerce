@@ -27,6 +27,16 @@ app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api", orderRoutes);
 
+// Añadir la ruta de prueba para verificar la conexión a MongoDB
+app.get("/test-db-connection", async (req, res) => {
+  try {
+    await mongoose.connection.db.admin().ping();
+    res.status(200).send("MongoDB connection is successful!");
+  } catch (error) {
+    res.status(500).send("MongoDB connection error: " + error.message);
+  }
+});
+
 // Manejar todas las demás rutas y devolver el archivo index.html de Angular
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "dist/restaurant-ecommerce/index.html"));
