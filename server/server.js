@@ -13,7 +13,7 @@ const port = process.env.PORT || 5000;
 
 // Configurar CORS para permitir solicitudes desde tu dominio de GitHub Pages
 const corsOptions = {
-  origin: "https://tu-usuario.github.io", // Reemplaza 'tu-usuario' con tu nombre de usuario de GitHub
+  origin: "https://Chucho2278.github.io", // Reemplaza 'tu-usuario' con tu nombre de usuario de GitHub
   optionsSuccessStatus: 200, // Para hacer compatible con navegadores más antiguos
 };
 
