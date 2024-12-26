@@ -23,10 +23,6 @@ app.use(express.json());
 // Servir archivos estáticos de Angular
 app.use(express.static(path.join(__dirname, "dist/restaurant-ecommerce")));
 
-app.use("/api/products", productRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api", orderRoutes);
-
 // Añadir la ruta de prueba para verificar la conexión a MongoDB
 app.get("/test-db-connection", async (req, res) => {
   try {
@@ -36,6 +32,10 @@ app.get("/test-db-connection", async (req, res) => {
     res.status(500).send("MongoDB connection error: " + error.message);
   }
 });
+
+app.use("/api/products", productRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api", orderRoutes);
 
 // Manejar todas las demás rutas y devolver el archivo index.html de Angular
 app.get("*", (req, res) => {
